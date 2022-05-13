@@ -7,11 +7,9 @@ Namespace HowToBindToMDB
 
 	Partial Public Class MainWindow
 		Inherits Window
-
 		Public Sub New()
 			InitializeComponent()
 		End Sub
-
 		Private Sub Window_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
 			' Create a connection object.
 			Dim connection As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=NWIND.MDB")
@@ -24,32 +22,57 @@ Namespace HowToBindToMDB
 
 			' Assign the data source to the PivotGrid control.
 			pivotGridControl1.DataSource = sourceDataSet.Tables("SalesPerson")
+			pivotGridControl1.DataProcessingEngine = DataProcessingEngine.Optimized
 
 			pivotGridControl1.BeginUpdate()
 
-			' Create a row pivot grid field bound to the Country datasource field.
-			Dim fieldCountry As New PivotGridField("Country", FieldArea.RowArea)
+			' Create a row pivot grid field bound to the Country data source column.
+			Dim fieldCountry As New PivotGridField()
+			fieldCountry.Caption = "Country"
+			fieldCountry.Area = FieldArea.RowArea
 
-			' Create a row pivot grid field bound to the Sales Person datasource field.
-			Dim fieldCustomer As New PivotGridField("Sales Person", FieldArea.RowArea)
+			Dim countryBinding As New DataSourceColumnBinding("Country")
+			fieldCountry.DataBinding = countryBinding
+
+			' Create a row pivot grid field bound to the Sales Person data source column.
+			Dim fieldCustomer As New PivotGridField()
 			fieldCustomer.Caption = "Customer"
+			fieldCustomer.Area = FieldArea.RowArea
 
-			' Create a column pivot grid field bound to the OrderDate datasource field.
-			Dim fieldYear As New PivotGridField("OrderDate", FieldArea.ColumnArea)
+			Dim customerBinding As New DataSourceColumnBinding("Sales Person")
+			fieldCustomer.DataBinding = customerBinding
+
+			' Create a column pivot grid field bound to the OrderDate data source column.
+			Dim fieldYear As New PivotGridField()
 			fieldYear.Caption = "Year"
-			' Group field values by years.
-			fieldYear.GroupInterval = FieldGroupInterval.DateYear
+			fieldYear.Area = FieldArea.ColumnArea
 
-			' Create a column pivot grid field bound to the CategoryName datasource field.
-			Dim fieldCategoryName As New PivotGridField("CategoryName", FieldArea.ColumnArea)
+			Dim fieldOrderDate1Binding As New DataSourceColumnBinding("OrderDate")
+			fieldOrderDate1Binding.GroupInterval = FieldGroupInterval.DateYear
+			fieldYear.DataBinding = fieldOrderDate1Binding
+
+			' Create a column pivot grid field bound to the CategoryName data source column.
+			Dim fieldCategoryName As New PivotGridField()
 			fieldCategoryName.Caption = "Product Category"
+			fieldCategoryName.Area = FieldArea.ColumnArea
 
-			' Create a filter pivot grid field bound to the ProductName datasource field.
-			Dim fieldProductName As New PivotGridField("ProductName", FieldArea.FilterArea)
+			Dim categoryNameBinding As New DataSourceColumnBinding("CategoryName")
+			fieldCategoryName.DataBinding = categoryNameBinding
+
+			' Create a filter pivot grid field bound to the ProductName data source column.
+			Dim fieldProductName As New PivotGridField()
 			fieldProductName.Caption = "Product Name"
+			fieldProductName.Area = FieldArea.FilterArea
 
-			' Create a data pivot grid field bound to the 'Extended Price' datasource field.
-			Dim fieldExtendedPrice As New PivotGridField("Extended Price", FieldArea.DataArea)
+			Dim productNameBinding As New DataSourceColumnBinding("ProductName")
+			fieldProductName.DataBinding = productNameBinding
+
+			' Create a data pivot grid field bound to the 'Extended Price' data source column.
+			Dim fieldExtendedPrice As New PivotGridField()
+			fieldExtendedPrice.Area = FieldArea.DataArea
+
+			Dim extendedPriceBinding As New DataSourceColumnBinding("Extended Price")
+			fieldExtendedPrice.DataBinding = extendedPriceBinding
 
 			' Specify the formatting setting to format summary values as integer currency amount.
 			fieldExtendedPrice.CellFormat = "c0"

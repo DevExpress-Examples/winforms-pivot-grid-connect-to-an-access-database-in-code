@@ -9,7 +9,6 @@ namespace HowToBindToMDB {
         public MainWindow() {
             InitializeComponent();
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             // Create a connection object.
             OleDbConnection connection =
@@ -24,32 +23,57 @@ namespace HowToBindToMDB {
 
             // Assign the data source to the PivotGrid control.
             pivotGridControl1.DataSource = sourceDataSet.Tables["SalesPerson"];
+            pivotGridControl1.DataProcessingEngine = DataProcessingEngine.Optimized;
 
             pivotGridControl1.BeginUpdate();
 
-            // Create a row pivot grid field bound to the Country datasource field.
-            PivotGridField fieldCountry = new PivotGridField("Country", FieldArea.RowArea);
+            // Create a row pivot grid field bound to the Country data source column.
+            PivotGridField fieldCountry = new PivotGridField();
+            fieldCountry.Caption = "Country";
+            fieldCountry.Area = FieldArea.RowArea;
 
-            // Create a row pivot grid field bound to the Sales Person datasource field.
-            PivotGridField fieldCustomer = new PivotGridField("Sales Person", FieldArea.RowArea);
+            DataSourceColumnBinding countryBinding = new DataSourceColumnBinding("Country");
+            fieldCountry.DataBinding = countryBinding;
+
+            // Create a row pivot grid field bound to the Sales Person data source column.
+            PivotGridField fieldCustomer = new PivotGridField();
             fieldCustomer.Caption = "Customer";
+            fieldCustomer.Area = FieldArea.RowArea;
 
-            // Create a column pivot grid field bound to the OrderDate datasource field.
-            PivotGridField fieldYear = new PivotGridField("OrderDate", FieldArea.ColumnArea);
+            DataSourceColumnBinding customerBinding = new DataSourceColumnBinding("Sales Person");
+            fieldCustomer.DataBinding = customerBinding;
+
+            // Create a column pivot grid field bound to the OrderDate data source column.
+            PivotGridField fieldYear = new PivotGridField();
             fieldYear.Caption = "Year";
-            // Group field values by years.
-            fieldYear.GroupInterval = FieldGroupInterval.DateYear;
+            fieldYear.Area = FieldArea.ColumnArea;
 
-            // Create a column pivot grid field bound to the CategoryName datasource field.
-            PivotGridField fieldCategoryName = new PivotGridField("CategoryName", FieldArea.ColumnArea);
+            DataSourceColumnBinding fieldOrderDate1Binding = new DataSourceColumnBinding("OrderDate");
+            fieldOrderDate1Binding.GroupInterval = FieldGroupInterval.DateYear;
+            fieldYear.DataBinding = fieldOrderDate1Binding;
+
+            // Create a column pivot grid field bound to the CategoryName data source column.
+            PivotGridField fieldCategoryName = new PivotGridField();
             fieldCategoryName.Caption = "Product Category";
+            fieldCategoryName.Area = FieldArea.ColumnArea;
 
-            // Create a filter pivot grid field bound to the ProductName datasource field.
-            PivotGridField fieldProductName = new PivotGridField("ProductName", FieldArea.FilterArea);
+            DataSourceColumnBinding categoryNameBinding = new DataSourceColumnBinding("CategoryName");
+            fieldCategoryName.DataBinding = categoryNameBinding;
+
+            // Create a filter pivot grid field bound to the ProductName data source column.
+            PivotGridField fieldProductName = new PivotGridField();
             fieldProductName.Caption = "Product Name";
+            fieldProductName.Area = FieldArea.FilterArea;
 
-            // Create a data pivot grid field bound to the 'Extended Price' datasource field.
-            PivotGridField fieldExtendedPrice = new PivotGridField("Extended Price", FieldArea.DataArea);
+            DataSourceColumnBinding productNameBinding = new DataSourceColumnBinding("ProductName");
+            fieldProductName.DataBinding = productNameBinding;
+
+            // Create a data pivot grid field bound to the 'Extended Price' data source column.
+            PivotGridField fieldExtendedPrice = new PivotGridField();
+            fieldExtendedPrice.Area = FieldArea.DataArea;
+
+            DataSourceColumnBinding extendedPriceBinding = new DataSourceColumnBinding("Extended Price");
+            fieldExtendedPrice.DataBinding = extendedPriceBinding;
 
             // Specify the formatting setting to format summary values as integer currency amount.
             fieldExtendedPrice.CellFormat = "c0";
