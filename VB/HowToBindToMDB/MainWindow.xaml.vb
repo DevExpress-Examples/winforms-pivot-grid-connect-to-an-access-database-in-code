@@ -4,10 +4,8 @@ Imports System.Windows
 Imports DevExpress.Xpf.PivotGrid
 
 Namespace HowToBindToMDB
-
     Public Partial Class MainWindow
         Inherits Window
-
         Public Sub New()
             Me.InitializeComponent()
         End Sub
