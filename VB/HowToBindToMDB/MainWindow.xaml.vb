@@ -4,11 +4,14 @@ Imports System.Windows
 Imports DevExpress.Xpf.PivotGrid
 
 Namespace HowToBindToMDB
+
     Public Partial Class MainWindow
         Inherits Window
+
         Public Sub New()
             Me.InitializeComponent()
         End Sub
+
         Private Sub Window_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
             ' Create a connection object.
             Dim connection As OleDbConnection = New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=NWIND.MDB")
