@@ -5,7 +5,7 @@
 
 # How to: Bind a PivotGrid to an MS Access Database at Runtime
 
-The following example demonstrates how to bind the Pivot Grid control to a `SalesPerson` view in the **nwind.mdb** database, that comes with the installation.
+The following example demonstrates how to bind the Pivot Grid control to a `SalesPerson` view in the **nwind.mdb** database included with the installation.
 
 <!-- default file list -->
 ## Files to Look at
