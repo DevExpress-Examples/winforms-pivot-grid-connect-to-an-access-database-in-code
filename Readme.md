@@ -4,7 +4,7 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
 
-# Pivot Grid for WinForms - Bind the Pivot Grid to an MS Access Database at Runtime
+# Pivot Grid for WPF - Bind the Pivot Grid to an MS Access Database at Runtime
 
 The following example demonstrates how to bind the Pivot Grid control to a `SalesPerson` view in the **nwind.mdb** database included with the installation.
 
